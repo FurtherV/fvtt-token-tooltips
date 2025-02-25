@@ -1,0 +1,34 @@
+<fieldset>
+    <legend>Attributes</legend>
+    <div>
+        <ol class="attribute-list">
+            {{#each fields.attributes}}
+            <li class="flexrow" data-index="{{@index}}">
+                <div class="col-index">
+                    {{@index}}
+                </div>
+                {{formGroup fields.icon.field value=fields.icon.value name=fields.icon.name classes="col-icon"
+                localize=true}}
+                {{formGroup fields.type.field value=fields.type.value name=fields.type.name classes="col-type"
+                localize=true}}
+                {{formGroup fields.path.field value=fields.path.value name=fields.path.name classes="col-path"
+                localize=true}}
+                <div class="col-controls">
+                    <a data-action="openEditor">
+                        <i class="fa-solid fa-edit"></i>
+                    </a>
+                </div>
+                <div class="col-controls">
+                    <a data-action="removeRow">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </div>
+            </li>
+            {{/each}}
+        </ol>
+    </div>
+    <button type="button" data-action="addRow">
+        <i class="fa-solid fa-plus"></i>
+        Add Row
+    </button>
+</fieldset>

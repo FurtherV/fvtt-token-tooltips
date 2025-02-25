@@ -1,0 +1,24 @@
+{
+  "FURTHERV-TOKEN-TOOLTIPS": {
+    "RowType": {
+      "path": "Path",
+      "code": "Code",
+      "generator": "Generator"
+    },
+    "Model": {
+      "Tooltip": {
+        "Attribute": {
+          "FIELDS": {}
+        },
+        "Config": {
+          "FIELDS": {
+            "columns": {
+              "label": "Columns",
+              "hint": "Sets the number of columns that the tooltip has."
+            }
+          }
+        }
+      }
+    }
+  }
+}

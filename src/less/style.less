@@ -1,0 +1,146 @@
+@module-id: furtherv-token-tooltips;
+
+.@{module-id} {
+  // taken from dnd5e #tooltip
+  &.token-tooltip {
+    position: absolute;
+    width: max-content;
+    max-width: 480px;
+    min-width: 240px;
+    padding: 6px 8px;
+    background: rgba(0, 0, 0, 0.95);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-16);
+    line-height: var(--font-size-16);
+    color: var(--color-text-light-highlight);
+    border: 1px solid var(--color-border-dark-secondary);
+    border-radius: 3px;
+    box-shadow: 0 0 4px #000;
+    z-index: var(--z-index-tooltip);
+    pointer-events: none;
+    overflow-wrap: break-word;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 500ms, opacity 500ms;
+
+    text-align: right;
+
+    font-family: var(--dnd5e-font-roboto);
+    font-size: var(--font-size-13);
+    text-align: start;
+    color: var(--color-text-dark-primary);
+    border-radius: 5px;
+    padding: 6px 8px;
+    //background: var(--dnd5e-color-parchment);
+    background: url("/systems/dnd5e/ui/texture-gray1.webp") no-repeat top left,
+      url("/systems/dnd5e/ui/texture-gray2.webp") no-repeat bottom right,
+      var(--dnd5e-color-parchment);
+    box-shadow: 0 0 16px var(--dnd5e-shadow-45);
+    border: var(--dnd5e-border-gold);
+    border-width: 2px;
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 500ms;
+    }
+
+    .content {
+      padding: 0 0.5rem 0.25rem;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-block: 6px 10px;
+
+      h2 {
+        margin: 0;
+        border: none;
+        font-family: var(--dnd5e-font-roboto-slab);
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+
+      .pills {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+
+        .pill {
+          font-family: var(--dnd5e-font-roboto);
+          font-weight: bold;
+          font-size: var(--font-size-11);
+          text-transform: uppercase;
+          border: 1px solid var(--color-border-dark-5);
+          border-radius: 3px;
+          background: var(--dnd5e-color-card);
+          padding: 0.1875rem 0.375rem;
+          display: flex;
+          gap: 0.25rem;
+          margin: 0;
+        }
+      }
+    }
+
+    .description {
+      .attributes {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        columns: 1;
+
+        .attribute-container {
+          display: flex;
+          align-items: center;
+          text-align: left;
+
+          i > {
+            width: 16px;
+            height: 16px;
+          }
+
+          * > {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  &.tooltip-config {
+    .attribute-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      columns: 1;
+
+      .form-group {
+        padding: 5px;
+
+        label {
+          display: none;
+        }
+      }
+
+      .col-icon,
+      .col-type {
+        flex: 1;
+      }
+
+      .col-path {
+        flex: 4;
+      }
+
+      .col-controls,
+      .col-index {
+        flex: 0 0 24px;
+        text-align: center;
+      }
+    }
+  }
+}

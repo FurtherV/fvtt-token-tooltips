@@ -1,0 +1,27 @@
+<aside id="{{id}}" class="{{moduleId}} token-tooltip {{activeClass}}" role="tooltip"
+    style="top: {{posY}}px; left: {{posX}}px;">
+    <section class="dnd5e2 content">
+        <section class="header">
+            <h2>{{header}}</h2>
+            <ul class="pills">
+                {{#each pills}}
+                <li class="pill {{class}}">
+                    {{text}}
+                </li>
+                {{/each}}
+            </ul>
+        </section>
+        <section class="description">
+            <ol class="attributes" style="column-count: {{columnCount}};">
+                {{#each rows}}
+                <li class="attribute-item">
+                    <div class="attribute-container">
+                        <i class="{{icon}}"></i>
+                        <p>{{value}}</p>
+                    </div>
+                </li>
+                {{/each}}
+            </ol>
+        </section>
+    </section>
+</aside>

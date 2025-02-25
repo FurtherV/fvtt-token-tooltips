@@ -1,0 +1,12 @@
+{
+  "name": "furtherv-actor-monitor",
+  "scripts": {
+    "dev": "npm run develop",
+    "develop": "rollup -c node:rollup-config-badger-den --config-den src/module:dev",
+    "release": "rollup -c node:rollup-config-badger-den --config-den src/module:release",
+    "watch": "rollup --watch -c node:rollup-config-badger-den --config-den src/module:dev"
+  },
+  "devDependencies": {
+    "rollup-config-badger-den": "^1.5.0"
+  }
+}

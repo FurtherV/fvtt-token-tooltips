@@ -1,0 +1,23 @@
+# Sensitive stuff
+foundry-config.json
+
+# Build Artifacts
+dest
+
+# FoundryVTT typings
+foundry
+system
+
+# IDE
+.idea/
+.nova/
+.vs/
+.vscode/
+*.code-workspace
+*.iml
+
+# Node Modules
+node_modules/
+
+# OS Specific
+.DS_Store
