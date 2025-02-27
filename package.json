@@ -7,6 +7,6 @@
     "watch": "rollup --watch -c node:rollup-config-badger-den --config-den src/module:dev"
   },
   "devDependencies": {
-    "rollup-config-badger-den": "^1.5.0"
+    "rollup-config-badger-den": "github:furtherv/rollup-config-badger-den#develop"
   }
 }
