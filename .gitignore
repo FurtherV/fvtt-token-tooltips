@@ -5,7 +5,7 @@ foundry-config.json
 dest
 
 # FoundryVTT typings
-foundry
+foundry/resources
 system
 
 # IDE
