@@ -1,4 +1,3 @@
-import { DOCUMENT_OWNERSHIP_LEVELS } from "../foundry/resources/app/common/constants.mjs";
 import { getConfigValue } from "./config.mjs";
 import { ATTRIBUTE_TYPES, LANG_ID } from "./constants.mjs";
 
