@@ -1,7 +1,8 @@
+import { DOCUMENT_OWNERSHIP_LEVELS } from "../foundry/resources/app/common/constants.mjs";
 import { getConfigValue } from "./config.mjs";
 import { ATTRIBUTE_TYPES, LANG_ID } from "./constants.mjs";
 
-const { StringField } = foundry.data.fields;
+const { StringField, BooleanField, NumberField } = foundry.data.fields;
 const { DataModel } = foundry.abstract;
 
 // TODO: Add possibility of using a macro
@@ -10,6 +11,26 @@ export class TooltipAttributeModel extends DataModel {
 
   static defineSchema() {
     return {
+      permission: new NumberField({
+        required: true,
+        nullable: false,
+        initial: CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE,
+        choices: Object.keys(CONST.DOCUMENT_OWNERSHIP_LEVELS).reduce(
+          (acc, x) => {
+            const numVal = CONST.DOCUMENT_OWNERSHIP_LEVELS[x];
+            if (numVal < 0) return acc;
+            const i18n = `OWNERSHIP.${x}`;
+            acc[numVal] = i18n;
+            return acc;
+          },
+          {}
+        ),
+      }),
+      pill: new BooleanField({
+        required: true,
+        nullable: false,
+        initial: false,
+      }),
       icon: new StringField({
         required: true,
         blank: true,
@@ -41,11 +62,16 @@ export class TooltipAttributeModel extends DataModel {
    * @returns {Object}
    */
   generateRow(token) {
+    // If we pass the placeable, get its document
     if (token.document) {
       token = token.document;
     }
 
+    // if token or token's actor is null, abort!
     if (token?.actor == null) return null;
+
+    // if we dont have permissions to see the row or pill, abort!
+    if (token.permission < this.permission) return null;
 
     let row;
 

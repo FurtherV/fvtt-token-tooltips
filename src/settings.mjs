@@ -44,7 +44,7 @@ export function registerModuleSettings() {
 
   game.settings.register(MODULE_ID, "disableTooltipsDrag", {
     name: "Disable While Dragging",
-    hint: "Enable to prevent tooltips from appearing when moving a token.",
+    hint: "(Requires LibWrapper) Enable to prevent tooltips from appearing when moving a token.",
     scope: "client",
     config: true,
     requiresReload: false,
@@ -54,7 +54,7 @@ export function registerModuleSettings() {
 
   game.settings.register(MODULE_ID, "disableTooltipsPile", {
     name: "Disable on Item Piles",
-    hint: "Enable to hide tooltips for item piles.",
+    hint: "(Requires ItemPiles) Enable to hide tooltips for item piles.",
     scope: "client",
     config: true,
     requiresReload: false,

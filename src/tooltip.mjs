@@ -65,6 +65,16 @@ export class TokenTooltip {
     const tooltipConfig =
       game.settings.get(MODULE_ID, "tooltipConfig") ?? new TooltipConfigModel();
 
+    const tooltipPills = tooltipConfig.attributes
+      .filter((x) => x.pill)
+      .flatMap((x) => x.generateRow(token, game.user))
+      .filter((x) => !!x);
+
+    const tooltipRows = tooltipConfig.attributes
+      .filter((x) => !x.pill)
+      .flatMap((x) => x.generateRow(token, game.user))
+      .filter((x) => !!x);
+
     const htmlString = await renderTemplate(
       `${TEMPLATE_FOLDER_PATH}/token-tooltip.hbs`,
       {
@@ -74,16 +84,9 @@ export class TokenTooltip {
         posX,
         posY,
         header: this.token.name,
-        pills: [
-          {
-            class: "type",
-            text: actor.system.details.type.label,
-          },
-        ],
+        pills: tooltipPills,
         columnCount: tooltipConfig.columns,
-        rows: tooltipConfig.attributes
-          .flatMap((x) => x.generateRow(token))
-          .filter((x) => !!x),
+        rows: tooltipRows,
       }
     );
 
@@ -127,17 +130,27 @@ export class TokenTooltip {
    */
   #isTokenValid(token) {
     token ??= this.token;
-    if (token == null || token.document == null) return false;
+    if (token == null || token.document == null || token.actor == null)
+      return false;
 
     // If the token has no world transform, we cant grab its position on the screen
     if (!token.worldTransform) return false;
 
+    // If the token is hidden, we should not show a tooltip for it
     if (token.document.hidden) return false;
 
-    // Ignore item piles
+    // Ignore item piles if required
     if (
       game.modules.get("item-piles")?.active &&
-      ItemPiles.API.isValidItemPile(token)
+      ItemPiles.API.isValidItemPile(token) &&
+      getModuleSetting("disableTooltipsPile")
+    )
+      return false;
+
+    // Ignore dead if required
+    if (
+      getModuleSetting("disableTooltipsDead") &&
+      token.document.actor.statuses.has(CONFIG.specialStatusEffects.DEFEATED)
     )
       return false;
 

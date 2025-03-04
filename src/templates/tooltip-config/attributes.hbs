@@ -2,11 +2,26 @@
     <legend>Attributes</legend>
     <div>
         <ol class="attribute-list">
+            <li class="attribute-list-header flexrow">
+                <div class="col-index">Index</div>
+                <div class="col-permission">Req. Permission</div>
+                <div class="col-pill">Is Pill</div>
+                <div class="col-icon">Icon</div>
+                <div class="col-type">Type</div>
+                <div class="col-path">Path / Code</div>
+                <div class="col-controls"></div>
+                <div class="col-controls"></div>
+            </li>
             {{#each fields.attributes}}
             <li class="flexrow" data-index="{{@index}}">
                 <div class="col-index">
                     {{@index}}
                 </div>
+                {{formGroup fields.permission.field value=fields.permission.value name=fields.permission.name
+                classes="col-permission"
+                localize=true}}
+                {{formGroup fields.pill.field value=fields.pill.value name=fields.pill.name classes="col-pill"
+                localize=true}}
                 {{formGroup fields.icon.field value=fields.icon.value name=fields.icon.name classes="col-icon"
                 localize=true}}
                 {{formGroup fields.type.field value=fields.type.value name=fields.type.name classes="col-type"

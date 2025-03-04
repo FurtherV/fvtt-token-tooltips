@@ -96,6 +96,8 @@ export class TooltipConfig extends HandlebarsApplicationMixin(ApplicationV2) {
     context.buttons = [
       { type: "submit", icon: "fas fa-save", label: "Save Changes" },
     ];
+
+    console.debug(context);
     return context;
   }
 

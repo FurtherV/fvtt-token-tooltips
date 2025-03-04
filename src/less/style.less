@@ -65,7 +65,7 @@
 
       .pills {
         list-style: none;
-        padding: 0;
+        padding-left: 10px;
         margin: 0;
         display: flex;
         flex-wrap: wrap;
@@ -113,6 +113,19 @@
   }
 
   &.tooltip-config {
+    .attribute-list-header {
+      text-align: center;
+      padding-right: 0px;
+
+      * > {
+        padding: 5px;
+      }
+
+      > .col-index {
+        padding: 0px;
+      }
+    }
+
     .attribute-list {
       list-style: none;
       padding: 0;
@@ -126,21 +139,26 @@
           display: none;
         }
       }
+    }
 
-      .col-icon,
-      .col-type {
-        flex: 1;
-      }
+    .col-pill {
+      flex: 0;
+    }
 
-      .col-path {
-        flex: 4;
-      }
+    .col-permission,
+    .col-icon,
+    .col-type {
+      flex: 1;
+    }
 
-      .col-controls,
-      .col-index {
-        flex: 0 0 24px;
-        text-align: center;
-      }
+    .col-path {
+      flex: 4;
+    }
+
+    .col-controls,
+    .col-index {
+      flex: 0 0 24px;
+      text-align: center;
     }
   }
 }
