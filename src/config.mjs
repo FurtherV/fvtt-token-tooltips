@@ -63,14 +63,16 @@ function shortcutDistance(token) {
   const userToken = game.canvas.tokens.get(speaker.token) || null;
 
   let text = NaN.toString();
-  if (userToken && userToken !== token) {
+  if (userToken?.document && userToken !== token) {
     const minimumDistance = minimumDistanceBetweenTokens(
       token,
       userToken,
       game.scenes.current
     );
-    const elevation = token.document.elevation;
-    const total = minimumDistance + elevation;
+    const elevationDiff = Math.abs(
+      token.document.elevation - userToken.document.elevation
+    );
+    const total = minimumDistance + elevationDiff;
     text = `${total.toFixed(1)}  ${game.canvas.grid.units}`.trim();
   }
 
