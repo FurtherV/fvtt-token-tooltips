@@ -7,7 +7,7 @@ export function registerConfig() {
   const shortcuts = {};
   shortcuts.healthState = shortcutHealthState;
   shortcuts.armorState = shortcutArmorState;
-  shortcuts.distance = distance;
+  shortcuts.distance = shortcutDistance;
   defaultconfig.shortcuts = shortcuts;
 
   // in theory users could register changes to the config before we actually add our stuff to it...
@@ -54,7 +54,7 @@ function shortcutArmorState(actor) {
   return { value: `${armorType} + ${shieldType}` };
 }
 
-function distance(token) {
+function shortcutDistance(token) {
   if (token instanceof TokenDocument) {
     token = token?.object;
   }
@@ -69,7 +69,9 @@ function distance(token) {
       userToken,
       game.scenes.current
     );
-    text = `${minimumDistance.toFixed(1)}  ${game.canvas.grid.units}`.trim();
+    const elevation = token.document.elevation;
+    const total = minimumDistance + elevation;
+    text = `${total.toFixed(1)}  ${game.canvas.grid.units}`.trim();
   }
 
   return {
