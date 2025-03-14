@@ -139,6 +139,9 @@ export class TokenTooltip {
     // If the token is hidden, we should not show a tooltip for it
     if (token.document.hidden) return false;
 
+    // Ignore groups
+    if (token.actor.type === "group") return false;
+
     // Ignore item piles if required
     if (
       game.modules.get("item-piles")?.active &&
