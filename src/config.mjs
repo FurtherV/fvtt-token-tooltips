@@ -64,15 +64,23 @@ function shortcutDistance(token) {
 
   let text = NaN.toString();
   if (userToken?.document && userToken !== token) {
-    const minimumDistance = minimumDistanceBetweenTokens(
+    const horizontalDistance = minimumDistanceBetweenTokens(
       token,
       userToken,
       game.scenes.current
     );
-    const elevationDiff = Math.abs(
+    const verticalDistance = Math.abs(
       token.document.elevation - userToken.document.elevation
     );
-    const total = minimumDistance + elevationDiff;
+    let total = horizontalDistance;
+
+    if (
+      game.settings.get("core", "gridDiagonals") ===
+      CONST.GRID_DIAGONALS.EQUIDISTANT
+    ) {
+      total = Math.max(horizontalDistance, verticalDistance);
+    }
+
     text = `${total.toFixed(1)}  ${game.canvas.grid.units}`.trim();
   }
 
