@@ -46,8 +46,14 @@ function shortcutHealthState(actor) {
 }
 
 function shortcutArmorState(actor) {
-  const armorType =
-    actor.system.attributes.ac.equippedArmor?.system.type.label ?? "Clothing";
+  let armorType;
+  if (actor.system.attributes.ac.calc === "natural") {
+    armorType = "Natural";
+  } else {
+    armorType =
+      actor.system.attributes.ac.equippedArmor?.system.type.label ?? "Clothing";
+  }
+
   const shieldType = actor.system.attributes.ac.equippedShield
     ? "Shield"
     : "No Shield";
