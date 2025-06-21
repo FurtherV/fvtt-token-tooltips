@@ -139,6 +139,9 @@ export class TokenTooltip {
     // If the token is hidden, we should not show a tooltip for it
     if (token.document.hidden) return false;
 
+    // If the token is insible, we should not show a tooltip for it
+    if ([CONFIG.specialStatusEffects.INVISIBLE, CONFIG.specialStatusEffects.NONDETECTION].some((x) => token.document.hasStatusEffect(x))) return false;
+
     // Ignore groups
     if (token.actor.type === "group") return false;
 
