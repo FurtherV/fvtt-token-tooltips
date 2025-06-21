@@ -49,7 +49,7 @@ if (!id) {
 }
 
 // Define symlink source and target for module
-const sourcePath = path.resolve(currentDir, `./dest/${id}`);
+const sourcePath = path.resolve(currentDir, `./dist/${id}`);
 const targetPath = path.join(userdataPath, "Data", "modules", id);
 
 // Ensure target directory exists
