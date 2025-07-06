@@ -61,11 +61,11 @@ export class TooltipConfig extends HandlebarsApplicationMixin(ApplicationV2) {
     const frame = await super._renderFrame(options);
 
     const exportLabel = "Export";
-    const exportButton = `<button type="button" class="header-control fa-solid fa-file-export" data-action="export" data-tooltip="${exportLabel}" aria-label="${exportLabel}"></button>`;
+    const exportButton = `<button type="button" class="header-control icon fa-solid fa-file-export" data-action="export" data-tooltip="${exportLabel}" aria-label="${exportLabel}"></button>`;
     this.window.close.insertAdjacentHTML("beforebegin", exportButton);
 
     const importLabel = "Import";
-    const importButton = `<button type="button" class="header-control fa-solid fa-file-import" data-action="import" data-tooltip="${importLabel}" aria-label="${importLabel}"></button>`;
+    const importButton = `<button type="button" class="header-control icon fa-solid fa-file-import" data-action="import" data-tooltip="${importLabel}" aria-label="${importLabel}"></button>`;
     this.window.close.insertAdjacentHTML("beforebegin", importButton);
 
     return frame;
@@ -158,7 +158,7 @@ export class TooltipConfig extends HandlebarsApplicationMixin(ApplicationV2) {
       window: {
         title: "Editor",
       },
-      content: await renderTemplate(`${TEMPLATE_FOLDER_PATH}/editor.hbs`, {
+      content: await foundry.applications.handlebars.renderTemplate(`${TEMPLATE_FOLDER_PATH}/editor.hbs`, {
         text: attributeWithIndex.path,
       }),
       rejectClose: false,
@@ -200,7 +200,7 @@ export class TooltipConfig extends HandlebarsApplicationMixin(ApplicationV2) {
       window: {
         title: "Import Tooltip Config",
       },
-      content: await renderTemplate(
+      content: await foundry.applications.handlebars.renderTemplate(
         `${TEMPLATE_FOLDER_PATH}/import-config.hbs`,
         {},
       ),
@@ -219,6 +219,6 @@ export class TooltipConfig extends HandlebarsApplicationMixin(ApplicationV2) {
     });
     if (!files.length)
       return ui.notifications.error("You did not upload a data file!");
-    readTextFromFile(files[0]).then((json) => thisApp.#import(json));
+    foundry.utils.readTextFromFile(files[0]).then((json) => thisApp.#import(json));
   }
 }

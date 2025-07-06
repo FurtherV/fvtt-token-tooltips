@@ -75,7 +75,7 @@ export class TokenTooltip {
       .flatMap((x) => x.generateRow(token, game.user))
       .filter((x) => !!x);
 
-    const htmlString = await renderTemplate(
+    const htmlString = await foundry.applications.handlebars.renderTemplate(
       `${TEMPLATE_FOLDER_PATH}/token-tooltip.hbs`,
       {
         id,
@@ -170,7 +170,7 @@ const posY = Math.round(worldTransform.ty - 5);
 const posX = Math.round(worldTransform.tx + (token.w * worldTransform.a) + 20);
 const id = `${MODULE_ID}-token-tooltip`;
 
-const htmlString = await renderTemplate(
+const htmlString = await foundry.applications.handlebars.renderTemplate(
   `${TEMPLATE_FOLDER_PATH}/token-tooltip.hbs`,
   {
     id,
