@@ -1,4 +1,32 @@
+import { MODULE_TITLE } from "./constants.mjs";
+
 const { SchemaField, ArrayField, EmbeddedDataField } = foundry.data.fields;
+
+/* -------------------------------------------- */
+/*  Logging                                     */
+/* -------------------------------------------- */
+
+/**
+ * Logs a styled console message with the module title as prefix.
+ *
+ * @param {string} message - Message to display.
+ * @param {object} [options={}] - Optional settings.
+ * @param {string} [options.color="#0b8000"] - Log message color.
+ * @param {any[]} [options.extras=[]] - Additional arguments for the log.
+ * @param {string} [options.level="log"] - Console method (log, warn, error, etc).
+ */
+export function log(message, { color = "#a7cc00", extras = [], level = "log" } = {}) {
+  console[level](
+    `%c${MODULE_TITLE} | %c${message}`,
+    `color: ${color}; font-weight: bold;`,
+    "color: revert",
+    ...extras,
+  );
+}
+
+/* -------------------------------------------- */
+/*  OTher                                       */
+/* -------------------------------------------- */
 
 export function pascalToWords(str) {
   return str.replace(/([A-Z])/g, " $1").trim();
@@ -60,13 +88,13 @@ export function collectTokenCenters(token) {
  * @returns {number} minimum distance between token and point on scene.
  */
 export function minimumDistanceBetweenTokenAndPoint(tokenA, point, scene) {
-  if (tokenA == null || point == null || scene == null) {
+  if ((tokenA == null) || (point == null) || (scene == null)) {
     return NaN;
   }
 
   const centersTokenA = collectTokenCenters(tokenA);
   const distances = centersTokenA.map(
-    (a) => scene.grid.measurePath([a, point]).distance
+    (a) => scene.grid.measurePath([a, point]).distance,
   );
 
   return Math.min(...distances);
@@ -81,14 +109,14 @@ export function minimumDistanceBetweenTokenAndPoint(tokenA, point, scene) {
  * @returns {number} minimum distance between the tokens.
  */
 export function minimumDistanceBetweenTokens(tokenA, tokenB, scene) {
-  if (tokenA == null || tokenB == null || scene == null) {
+  if ((tokenA == null) || (tokenB == null) || (scene == null)) {
     return NaN;
   }
 
   const centersTokenA = collectTokenCenters(tokenA);
   const centersTokenB = collectTokenCenters(tokenB);
   const distances = centersTokenA.flatMap((a) =>
-    centersTokenB.map((b) => scene.grid.measurePath([a, b]).distance)
+    centersTokenB.map((b) => scene.grid.measurePath([a, b]).distance),
   );
 
   return Math.min(...distances);

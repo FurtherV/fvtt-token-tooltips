@@ -1,16 +1,16 @@
 import "./less/style.less";
 
-import { MODULE_ID, TEMPLATE_FOLDER_PATH } from "./constants.mjs";
+import { MODULE_ID, TEMPLATE_FOLDER_PATH } from "./scripts/constants.mjs";
 import {
   getModuleSetting,
   registerModuleSettings,
   setModuleSetting,
-} from "./settings.mjs";
-import { TokenTooltip } from "./tooltip.mjs";
-import { registerConfig } from "./config.mjs";
-import { registerWrappers } from "./wrappers.mjs";
-import { TooltipConfigModel } from "./tooltip-config-model.mjs";
-import { TooltipAttributeModel } from "./tooltip-attribute-model.mjs";
+} from "./scripts/settings.mjs";
+import { TokenTooltip } from "./scripts/tooltip.mjs";
+import { registerConfig } from "./scripts/config.mjs";
+import { registerWrappers } from "./scripts/wrappers.mjs";
+import { TooltipConfigModel } from "./scripts/tooltip-config-model.mjs";
+import { TooltipAttributeModel } from "./scripts/tooltip-attribute-model.mjs";
 
 Hooks.on("init", () => {
   registerModuleSettings();
@@ -57,7 +57,7 @@ Hooks.on(
   "canvasPan",
   foundry.utils.debounce(() => {
     TokenTooltip.instance.update();
-  }, 50)
+  }, 50),
 );
 
 Hooks.on("getSceneControlButtons", (controls) => {

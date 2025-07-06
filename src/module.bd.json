@@ -5,9 +5,14 @@
   "description": "Shows configurable tooltips when hovering over tokens.",
   "projectUrl": "",
   "entryPoints": {
-    "main": "furtherv-token-tooltips.mjs",
+    "main": "module.mjs",
     "lang": "static/lang/**",
-    "templates": "templates"
+    "templates": "templates/*"
+  },
+  "package": {
+    "create": false,
+    "download": "",
+    "manifest": ""
   },
   "dest": "../dist",
   "static": [
@@ -16,7 +21,7 @@
   "profile": {
     "dev": {
       "compress": false,
-      "sourcemaps": true,
+      "sourcemaps": false,
       "clean": false,
       "hmr": true,
       "entryPoints": {
@@ -29,14 +34,17 @@
       "compress": true,
       "sourcemaps": false,
       "clean": true,
-      "hmr": false
+      "hmr": false,
+      "package": {
+        "create": true
+      }
     }
   },
   "dependencies": {
     "core": [
-      "12",
-      "12",
-      "12"
+      "13",
+      "13",
+      "13"
     ],
     "modules": {
       "lib-wrapper": [
@@ -46,9 +54,9 @@
     },
     "systems": {
       "dnd5e": [
-        "4.3.0",
-        "4.3.1",
-        "4.4.3"
+        "5.0.0",
+        "5.0.3",
+        "5.9.9"
       ]
     }
   },

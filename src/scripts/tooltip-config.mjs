@@ -202,7 +202,7 @@ export class TooltipConfig extends HandlebarsApplicationMixin(ApplicationV2) {
       },
       content: await renderTemplate(
         `${TEMPLATE_FOLDER_PATH}/import-config.hbs`,
-        {}
+        {},
       ),
       rejectClose: false,
       modal: true,

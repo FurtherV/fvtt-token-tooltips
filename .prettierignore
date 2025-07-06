@@ -1,8 +1,0 @@
-# Ignore output folder
-dest
-
-# Ignore all CSS files because we use LESS
-**/*.css
-
-# Ignore anything in the packs folder
-packs

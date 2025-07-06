@@ -9,6 +9,6 @@ export function registerWrappers() {
     function (wrapped, ...args) {
       if (getModuleSetting("disableTooltipsDrag")) TokenTooltip.instance.hide();
     },
-    "LISTENER"
+    "LISTENER",
   );
 }

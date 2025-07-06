@@ -69,14 +69,14 @@ function shortcutDistance(token) {
   const userToken = game.canvas.tokens.get(speaker.token) || null;
 
   let text = NaN.toString();
-  if (userToken?.document && userToken !== token) {
+  if ((userToken?.document) && (userToken !== token)) {
     const horizontalDistance = minimumDistanceBetweenTokens(
       token,
       userToken,
-      game.scenes.current
+      game.scenes.current,
     );
     const verticalDistance = Math.abs(
-      token.document.elevation - userToken.document.elevation
+      token.document.elevation - userToken.document.elevation,
     );
     let total = horizontalDistance;
 

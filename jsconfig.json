@@ -1,24 +1,16 @@
 {
   "compilerOptions": {
-    "module": "ES2020",
-    "target": "ES2020",
-    "checkJs": false,
-    "allowJs": true,
-    "noEmit": true,
-    "moduleResolution": "node",
-    "strictNullChecks": false,
-    "baseUrl": "./src",
+    "module": "ES2022",
+    "target": "ES2024",
     "paths": {
-      "FUtils": ["../foundry/resources/app/common/utils/collection.mjs"],
-      "FCommon": ["../foundry/resources/app/common/types.mjs"],
-      "FClient": ["../foundry/resources/app/client-esm/client.mjs"],
-      "FFields": ["../foundry/resources/app/common/data/fields.mjs"],
-      "PIXI-App": ["../foundry/resources/app/node_modules/@pixi/app/lib/Application"]
+      "@client/*": ["./foundry/client/*"],
+      "@common/*": ["./foundry/common/*"]
     }
   },
+  "exclude": ["node_modules", "**/node_modules/*"],
+  "include": ["src/module.mjs", "src/debug.mjs","src/**/*.mjs", "foundry/client/client.mjs", "global.d.ts"],
   "typeAcquisition": {
-    "include": ["jquery", "dom"]
-  },
-  "include": ["src/**/*.mjs", "foundry/resources/app/public/scripts", "foundry/globals.js", "system/**/*.mjs"],
-  "exclude": ["node_modules", "**/node_modules/*"]
+    "include": ["jquery"]
+  }
 }
+

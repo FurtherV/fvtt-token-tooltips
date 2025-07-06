@@ -1,11 +1,20 @@
 {
-  "name": "furtherv-actor-monitor",
+  "name": "furtherv-token-tooltips",
+  "version": "1.0.0",
+  "description": "FurtherV's Token Tooltips",
+  "author": "FurtherV",
   "scripts": {
     "build": "rollup -c node:rollup-config-badger-den --config-den src/module:release --config-pack",
     "build:dev": "rollup -c node:rollup-config-badger-den --config-den src/module:dev",
-    "watch": "rollup --watch -c node:rollup-config-badger-den --config-den src/module:dev"
+    "watch": "rollup --watch -c node:rollup-config-badger-den --config-den src/module:dev",
+    "createSymlinks": "node ./tools/create-symbolic-links.mjs"
   },
   "devDependencies": {
-    "rollup-config-badger-den": "github:furtherv/rollup-config-badger-den#develop"
+    "@foundryvtt/foundryvtt-cli": "^1.0.2",
+    "@html-eslint/eslint-plugin": "^0.26.0",
+    "@html-eslint/parser": "^0.26.0",
+    "@types/jquery": "^3.5.32",
+    "eslint": "^8.57.0",
+    "rollup-config-badger-den": "github:FurtherV/rollup-config-badger-den#develop"
   }
 }

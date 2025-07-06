@@ -22,7 +22,7 @@ export class TooltipAttributeModel extends DataModel {
             acc[numVal] = i18n;
             return acc;
           },
-          {}
+          {},
         ),
       }),
       pill: new BooleanField({
@@ -126,7 +126,7 @@ export class TooltipAttributeModel extends DataModel {
       "token",
       "model",
       "shortcuts",
-      `{${this.path}\n}`
+      `{${this.path}\n}`,
     );
 
     const modelObject = this.toObject();
@@ -137,7 +137,7 @@ export class TooltipAttributeModel extends DataModel {
         token.actor,
         token,
         modelObject,
-        getConfigValue("shortcuts")
+        getConfigValue("shortcuts"),
       );
       if (row != null) {
         row.icon ??= this.icon;

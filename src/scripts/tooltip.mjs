@@ -40,7 +40,7 @@ export class TokenTooltip {
 
     // Also do not do anything if we are in ruler mode and should not show tooltips during that
     if (
-      ui.controls.tool === "ruler" &&
+      (ui.controls.tool === "ruler") &&
       getModuleSetting("disableTooltipsRuler")
     )
       return;
@@ -87,7 +87,7 @@ export class TokenTooltip {
         pills: tooltipPills,
         columnCount: tooltipConfig.columns,
         rows: tooltipRows,
-      }
+      },
     );
 
     const tooltipElement = document.getElementById(id);
@@ -130,7 +130,7 @@ export class TokenTooltip {
    */
   #isTokenValid(token) {
     token ??= this.token;
-    if (token == null || token.document == null || token.actor == null)
+    if ((token == null) || (token.document == null) || (token.actor == null))
       return false;
 
     // If the token has no world transform, we cant grab its position on the screen

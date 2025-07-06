@@ -32,6 +32,8 @@ export function registerModuleSettings() {
     default: true,
   });
 
+  PrimaryCanvasGroupAmbienceFilter;
+
   game.settings.register(MODULE_ID, "disableTooltipsRuler", {
     name: "Disable on Measurement Layer.",
     hint: "Enable to hide tooltips while using the measurement ruler.",

@@ -8,6 +8,12 @@ const MODULE_ID = "%config.id%";
  * @type {string}
  * @readonly
  */
+const MODULE_TITLE = "%config.title%";
+
+/**
+ * @type {string}
+ * @readonly
+ */
 const LANG_ID = MODULE_ID.toUpperCase();
 
 /**
@@ -40,6 +46,7 @@ const ATTRIBUTE_TYPES = {
 
 export {
   MODULE_ID,
+  MODULE_TITLE,
   LANG_ID,
   FLAG,
   LANG_SETTINGS_PATH,
