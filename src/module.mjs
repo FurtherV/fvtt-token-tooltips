@@ -63,15 +63,15 @@ Hooks.on(
 Hooks.on("getSceneControlButtons", (controls) => {
   if (!canvas) return;
 
-  const tokenControl = controls.find((x) => x.name === "token");
-  tokenControl.tools.push({
-    name: "tooltip",
-    title: "Toggle Tooltips",
-    icon: "fa-solid fa-comment",
+  controls.tokens.tools.tokenTooltip = {
     active: getModuleSetting("enableTooltips") === true,
+    icon: "fa-solid fa-comment",
+    name: "tokenTooltip",
+    title: "Toggle Tooltips",
     toggle: true,
-    onClick: (toggled) => {
-      setModuleSetting("enableTooltips", toggled);
+    visible: true,
+    onChange: (event, active) => {
+      setModuleSetting("enableTooltips", active);
     },
-  });
+  };
 });
