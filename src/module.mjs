@@ -31,6 +31,14 @@ Hooks.on("libWrapper.Ready", () => {
   registerWrappers();
 });
 
+Hooks.on("canvasTearDown", () => {
+  TokenTooltip.instance.hide();
+});
+
+Hooks.on("canvasInit", () => {
+  TokenTooltip.instance.hide();
+});
+
 Hooks.on("hoverToken", async (token, hoverIn) => {
   if (hoverIn) {
     TokenTooltip.instance.show(token);
@@ -45,7 +53,7 @@ Hooks.on("refreshToken", (token) => {
 });
 
 Hooks.on("deleteToken", (token) => {
-  if (token.id !== TokenTooltip.instance.token.id) return;
+  if (token?.id !== TokenTooltip.instance.token?.id) return;
   TokenTooltip.instance.hide();
 });
 
