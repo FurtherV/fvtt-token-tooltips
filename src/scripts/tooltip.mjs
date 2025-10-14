@@ -65,15 +65,23 @@ export class TokenTooltip {
     const tooltipConfig =
       game.settings.get(MODULE_ID, "tooltipConfig") ?? new TooltipConfigModel();
 
-    const tooltipPills = tooltipConfig.attributes
-      .filter((x) => x.pill)
-      .flatMap((x) => x.generateRow(token, game.user))
-      .filter((x) => !!x);
+    let tooltipPills = [];
+    let tooltipRows = [];
+    try {
+      tooltipPills = tooltipConfig.attributes
+        .filter((x) => x.pill)
+        .flatMap((x) => x.generateRow(token, game.user))
+        .filter((x) => !!x);
 
-    const tooltipRows = tooltipConfig.attributes
-      .filter((x) => !x.pill)
-      .flatMap((x) => x.generateRow(token, game.user))
-      .filter((x) => !!x);
+      tooltipRows = tooltipConfig.attributes
+        .filter((x) => !x.pill)
+        .flatMap((x) => x.generateRow(token, game.user))
+        .filter((x) => !!x);
+    } catch (err) {
+      console.error(err);
+      this.hide();
+      return;
+    }
 
     const htmlString = await foundry.applications.handlebars.renderTemplate(
       `${TEMPLATE_FOLDER_PATH}/token-tooltip.hbs`,

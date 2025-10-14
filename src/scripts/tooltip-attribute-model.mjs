@@ -1,5 +1,5 @@
 import { getConfigValue } from "./config.mjs";
-import { ATTRIBUTE_TYPES, LANG_ID } from "./constants.mjs";
+import { ATTRIBUTE_TYPES, LANG_ID, MODULE_TITLE } from "./constants.mjs";
 
 const { StringField, BooleanField, NumberField } = foundry.data.fields;
 const { DataModel } = foundry.abstract;
@@ -125,29 +125,45 @@ export class TooltipAttributeModel extends DataModel {
       "actor",
       "token",
       "model",
-      "shortcuts",
+      "presets",
       `{${this.path}\n}`,
     );
 
     const modelObject = this.toObject();
 
     try {
-      const row = fn.call(
+      // TODO: improve naming
+      let row = fn.call(
         modelObject,
         token.actor,
         token,
         modelObject,
-        getConfigValue("shortcuts"),
+        getConfigValue("presets"),
       );
+
+      console.debug({ row });
+
+      // Check if the return value is a preset function
+      if ((typeof row === "function") && (Object.values(getConfigValue("presets")).includes(row))) {
+        // TODO: reuse args from last, no duplicate code
+        row = row.call(modelObject, token.actor, token, modelObject, getConfigValue("presets"));
+      }
+
+      console.debug({ row });
+
       if (row != null) {
         row.icon ??= this.icon;
       }
+
       return row;
+
     } catch (err) {
-      ui.notifications.error("A tooltip code row produced an error!", {
+      ui.notifications.error(`${MODULE_TITLE}: A tooltip code row produced an error! See the console for more details.`, {
         localize: true,
       });
+      console.error("Row Data:", this.toObject());
       console.error(err);
+      throw err;
     }
   }
 

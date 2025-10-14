@@ -4,11 +4,14 @@ import { minimumDistanceBetweenTokens } from "./utils.mjs";
 export function registerConfig() {
   const defaultconfig = {};
 
-  const shortcuts = {};
-  shortcuts.healthState = shortcutHealthState;
-  shortcuts.armorState = shortcutArmorState;
-  shortcuts.distance = shortcutDistance;
-  defaultconfig.shortcuts = shortcuts;
+  const presets = {};
+
+  presets.health = presetHealthState;
+  presets.armor = presetArmorState;
+  presets.distance = presetDistance;
+  presets.disposition = presetDisposition;
+
+  defaultconfig.presets = presets;
 
   // in theory users could register changes to the config before we actually add our stuff to it...
   const existingConfig = CONFIG[MODULE_ID];
@@ -22,7 +25,11 @@ export function getConfigValue(path) {
   return foundry.utils.getProperty(CONFIG[MODULE_ID], path);
 }
 
-function shortcutHealthState(actor) {
+function presetDisposition(actor, token, model, presets) {
+  return { value: foundry.utils.invertObject(CONST.TOKEN_DISPOSITIONS)[token.disposition] };
+}
+
+function presetHealthState(actor, token, model, presets) {
   const pct = actor.system.attributes.hp.pct;
   const dmg = actor.system.attributes.hp.damage;
   const hp = actor.system.attributes.hp.value;
@@ -54,7 +61,7 @@ function shortcutHealthState(actor) {
   return { value: `${status} (${dmg})` };
 }
 
-function shortcutArmorState(actor) {
+function presetArmorState(actor, token, model, presets) {
   let armorText = "";
 
   const actorAcCalc = actor.system.attributes.ac.calc;
@@ -90,7 +97,7 @@ function shortcutArmorState(actor) {
   return { value: `${armorText}` };
 }
 
-function shortcutDistance(token) {
+function presetDistance(actor, token, model, presets) {
   if (token instanceof TokenDocument) {
     token = token?.object;
   }

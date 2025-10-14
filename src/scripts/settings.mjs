@@ -20,6 +20,10 @@ export function registerModuleSettings() {
     requiresReload: false,
     type: TooltipConfigModel,
     default: new TooltipConfigModel({}),
+    onChange: () => {
+      //FIXME causes circular dependency in rollup
+      //TokenTooltip.instance?.update();
+    },
   });
 
   game.settings.register(MODULE_ID, "enableTooltips", {
