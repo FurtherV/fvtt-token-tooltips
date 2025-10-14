@@ -1,4 +1,4 @@
-import { MODULE_ID, TEMPLATE_FOLDER_PATH } from "./constants.mjs";
+import { FLAG, MODULE_ID, TEMPLATE_FOLDER_PATH } from "./constants.mjs";
 import { getModuleSetting } from "./settings.mjs";
 import { TooltipConfigModel } from "./tooltip-config-model.mjs";
 
@@ -167,6 +167,9 @@ export class TokenTooltip {
       token.document.actor.statuses.has(CONFIG.specialStatusEffects.DEFEATED)
     )
       return false;
+
+    // Ignore if tooltips are disabled for this token
+    if (token.document.getFlag(MODULE_ID, FLAG.DISABLE_TOOLTIP) === true) return false;
 
     return true;
   }

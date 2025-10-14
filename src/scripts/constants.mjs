@@ -20,7 +20,9 @@ const LANG_ID = MODULE_ID.toUpperCase();
  * @enum {string}
  * @readonly
  */
-const FLAG = {};
+const FLAG = {
+  DISABLE_TOOLTIP: "disableTooltip",
+};
 
 /**
  * @type {string}
