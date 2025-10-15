@@ -141,15 +141,11 @@ export class TooltipAttributeModel extends DataModel {
         getConfigValue("presets"),
       );
 
-      console.debug({ row });
-
       // Check if the return value is a preset function
       if ((typeof row === "function") && (Object.values(getConfigValue("presets")).includes(row))) {
         // TODO: reuse args from last, no duplicate code
         row = row.call(modelObject, token.actor, token, modelObject, getConfigValue("presets"));
       }
-
-      console.debug({ row });
 
       if (row != null) {
         row.icon ??= this.icon;
