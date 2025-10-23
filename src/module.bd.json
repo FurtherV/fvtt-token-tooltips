@@ -23,12 +23,7 @@
       "compress": false,
       "sourcemaps": false,
       "clean": false,
-      "hmr": true,
-      "entryPoints": {
-        "main": [
-          "debug.mjs"
-        ]
-      }
+      "hmr": true
     },
     "release": {
       "compress": true,
