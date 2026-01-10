@@ -1,4 +1,3 @@
-import TokenDocument from "@client/documents/token.mjs";
 import { getConfigValue } from "./config.mjs";
 import { ATTRIBUTE_TYPES, LANG_ID, MODULE_TITLE } from "./constants.mjs";
 
