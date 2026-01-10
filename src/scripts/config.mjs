@@ -26,6 +26,8 @@ export function getConfigValue(path) {
 }
 
 function presetDisposition(actor, token, model, presets) {
+  if (token.combatant == null) return null; // only show in combat
+
   return { value: foundry.utils.invertObject(CONST.TOKEN_DISPOSITIONS)[token.disposition] };
 }
 

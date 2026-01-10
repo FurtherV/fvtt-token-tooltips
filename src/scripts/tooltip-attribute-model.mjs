@@ -1,3 +1,4 @@
+import TokenDocument from "@client/documents/token.mjs";
 import { getConfigValue } from "./config.mjs";
 import { ATTRIBUTE_TYPES, LANG_ID, MODULE_TITLE } from "./constants.mjs";
 
@@ -89,6 +90,9 @@ export class TooltipAttributeModel extends DataModel {
     return row;
   }
 
+  /**
+   * @param {TokenDocument} token
+   */
   #generatePathRow(token) {
     let source = token.actor;
     const dataPath = this.path;
@@ -119,6 +123,9 @@ export class TooltipAttributeModel extends DataModel {
     };
   }
 
+  /**
+   * @param {TokenDocument} token
+   */
   #generateCodeRow(token) {
     const fnConstructor = function () {}.constructor;
     const fn = new fnConstructor(
@@ -163,6 +170,9 @@ export class TooltipAttributeModel extends DataModel {
     }
   }
 
+  /**
+   * @param {TokenDocument} token
+   */
   #generateGeneratorRow(token) {
     return {
       value: "",

@@ -144,8 +144,10 @@ export class TokenTooltip {
     // If the token has no world transform, we cant grab its position on the screen
     if (!token.worldTransform) return false;
 
-    // If the token is hidden, we should not show a tooltip for it
+    // If the token is hidden or secret, we should not show a tooltip for it
     if (token.document.hidden) return false;
+    if (token.document.isSecret) return false;
+    if (!token.visible) return false;
 
     // If the token is insible, we should not show a tooltip for it
     if ([CONFIG.specialStatusEffects.INVISIBLE, CONFIG.specialStatusEffects.NONDETECTION].some((x) => token.document.hasStatusEffect(x))) return false;
