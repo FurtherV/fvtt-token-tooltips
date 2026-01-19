@@ -12,6 +12,12 @@ export class TooltipConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 
     /** @type {TooltipConfigModel} */
     this.object = game.settings.get(MODULE_ID, "tooltipConfig").clone();
+
+    this._dragHandlers = {
+      dragstart: this._onDragStart.bind(this),
+      dragover: this._onDragOver.bind(this),
+      drop: this._onDrop.bind(this),
+    };
   }
 
   static DEFAULT_OPTIONS = {
@@ -24,7 +30,7 @@ export class TooltipConfig extends HandlebarsApplicationMixin(ApplicationV2) {
       "standard-form",
     ],
     position: {
-      width: 1000,
+      width: 1100,
       height: "auto",
     },
     window: {
@@ -69,6 +75,16 @@ export class TooltipConfig extends HandlebarsApplicationMixin(ApplicationV2) {
     this.window.close.insertAdjacentHTML("beforebegin", importButton);
 
     return frame;
+  }
+
+  /** @inheritDoc */
+  async _onRender(context, options) {
+    await super._onRender(context, options);
+    const list = this.element?.querySelector(".attribute-list");
+    if (!list) return;
+    list.addEventListener("dragstart", this._dragHandlers.dragstart);
+    list.addEventListener("dragover", this._dragHandlers.dragover);
+    list.addEventListener("drop", this._dragHandlers.drop);
   }
 
   /** @inheritDoc */
@@ -220,5 +236,46 @@ export class TooltipConfig extends HandlebarsApplicationMixin(ApplicationV2) {
     if (!files.length)
       return ui.notifications.error("You did not upload a data file!");
     foundry.utils.readTextFromFile(files[0]).then((json) => thisApp.#import(json));
+  }
+
+  _onDragStart(event) {
+    if (!event.target.closest(".drag-handle")) return;
+    const row = event.target.closest("li[data-index]");
+    if (!row) return;
+    event.dataTransfer.setData(
+      "application/json",
+      JSON.stringify({ sourceIndex: Number(row.dataset.index) }),
+    );
+    event.dataTransfer.effectAllowed = "move";
+  }
+
+  _onDragOver(event) {
+    const row = event.target.closest("li[data-index]");
+    if (!row) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }
+
+  _onDrop(event) {
+    const row = event.target.closest("li[data-index]");
+    if (!row) return;
+    event.preventDefault();
+    let data;
+    try {
+      data = JSON.parse(event.dataTransfer.getData("application/json"));
+    } catch {
+      return;
+    }
+    const sourceIndex = Number(data?.sourceIndex);
+    const targetIndex = Number(row.dataset.index);
+    if (!Number.isInteger(sourceIndex) || !Number.isInteger(targetIndex)) return;
+    if (sourceIndex === targetIndex) return;
+
+    const attributes = Array.from(this.object.attributes);
+    if (!attributes[sourceIndex]) return;
+    const [moved] = attributes.splice(sourceIndex, 1);
+    attributes.splice(targetIndex, 0, moved);
+    this.object.updateSource({ attributes });
+    this.render();
   }
 }

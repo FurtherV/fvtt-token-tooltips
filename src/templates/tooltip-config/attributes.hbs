@@ -1,49 +1,55 @@
 <fieldset>
-    <legend>Attributes</legend>
-    <div>
-        <ol class="attribute-list">
-            <li class="attribute-list-header flexrow">
-                <div class="col-index">Index</div>
-                <div class="col-permission">Req. Permission</div>
-                <div class="col-pill">Is Pill</div>
-                <div class="col-icon">Icon</div>
-                <div class="col-type">Type</div>
-                <div class="col-path">Path / Code</div>
-                <div class="col-controls"></div>
-                <div class="col-controls"></div>
-            </li>
-            {{#each fields.attributes}}
-            <li class="flexrow" data-index="{{@index}}">
-                <div class="col-index">
-                    {{@index}}
-                </div>
-                {{formGroup fields.permission.field value=fields.permission.value name=fields.permission.name
-                classes="col-permission"
-                localize=true}}
-                {{formGroup fields.pill.field value=fields.pill.value name=fields.pill.name classes="col-pill"
-                localize=true}}
-                {{formGroup fields.icon.field value=fields.icon.value name=fields.icon.name classes="col-icon"
-                localize=true}}
-                {{formGroup fields.type.field value=fields.type.value name=fields.type.name classes="col-type"
-                localize=true}}
-                {{formGroup fields.path.field value=fields.path.value name=fields.path.name classes="col-path"
-                localize=true}}
-                <div class="col-controls">
-                    <a data-action="openEditor">
-                        <i class="fa-solid fa-edit"></i>
-                    </a>
-                </div>
-                <div class="col-controls">
-                    <a data-action="removeRow">
-                        <i class="fa-solid fa-trash"></i>
-                    </a>
-                </div>
-            </li>
-            {{/each}}
-        </ol>
-    </div>
-    <button type="button" data-action="addRow">
-        <i class="fa-solid fa-plus"></i>
-        Add Row
-    </button>
+  <legend>Attributes</legend>
+  <div>
+    <ol class="attribute-list">
+      <li class="attribute-list-header flexrow">
+        <div class="col-drag"></div>
+        <div class="col-index">Index</div>
+        <div class="col-permission">Ownership</div>
+        <div class="col-pill">Pill</div>
+        <div class="col-icon">Icon</div>
+        <div class="col-type">Type</div>
+        <div class="col-path">Path / Code</div>
+        <div class="col-controls"></div>
+        <div class="col-controls"></div>
+      </li>
+      {{#each fields.attributes}}
+      <li class="flexrow" data-index="{{@index}}">
+        <div class="col-drag">
+          <a class="drag-handle" draggable="true" aria-label="Drag to reorder" data-tooltip="Drag to reorder">
+            <i class="fa-solid fa-grip-vertical"></i>
+          </a>
+        </div>
+        <div class="col-index">
+          {{@index}}
+        </div>
+        {{formGroup fields.permission.field value=fields.permission.value name=fields.permission.name
+        classes="col-permission"
+        localize=true}}
+        {{formGroup fields.pill.field value=fields.pill.value name=fields.pill.name classes="col-pill"
+        localize=true}}
+        {{formGroup fields.icon.field value=fields.icon.value name=fields.icon.name classes="col-icon"
+        localize=true}}
+        {{formGroup fields.type.field value=fields.type.value name=fields.type.name classes="col-type"
+        localize=true}}
+        {{formGroup fields.path.field value=fields.path.value name=fields.path.name classes="col-path"
+        localize=true}}
+        <div class="col-controls">
+          <a data-action="openEditor">
+            <i class="fa-solid fa-edit"></i>
+          </a>
+        </div>
+        <div class="col-controls">
+          <a data-action="removeRow">
+            <i class="fa-solid fa-trash"></i>
+          </a>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+  </div>
+  <button type="button" data-action="addRow">
+    <i class="fa-solid fa-plus"></i>
+    Add Row
+  </button>
 </fieldset>
