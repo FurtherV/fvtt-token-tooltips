@@ -4,7 +4,6 @@ import { ATTRIBUTE_TYPES, LANG_ID, MODULE_TITLE } from "./constants.mjs";
 const { StringField, BooleanField, NumberField } = foundry.data.fields;
 const { DataModel } = foundry.abstract;
 
-// TODO: Add possibility of using a macro
 export class TooltipAttributeModel extends DataModel {
   static LOCALIZATION_PREFIXES = [`${LANG_ID}.Model.Tooltip.Attribute`];
 
@@ -78,8 +77,8 @@ export class TooltipAttributeModel extends DataModel {
       case ATTRIBUTE_TYPES.CODE:
         row = this.#generateCodeRow(token);
         break;
-      case ATTRIBUTE_TYPES.GENERATOR:
-        row = this.#generateGeneratorRow(token);
+      case ATTRIBUTE_TYPES.MACRO:
+        row = this.#generateMacroRow(token);
         break;
       case ATTRIBUTE_TYPES.PATH:
       default:
@@ -172,7 +171,7 @@ export class TooltipAttributeModel extends DataModel {
   /**
    * @param {TokenDocument} token
    */
-  #generateGeneratorRow(token) {
+  #generateMacroRow(token) {
     return {
       value: "",
     };

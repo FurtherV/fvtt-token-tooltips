@@ -58,17 +58,19 @@ async function main() {
 
   if (foundryVersion == 12) {
     // Javascript files for v12
+    console.info("Using FoundryVTT V12 setup");
     for (const p of ["client", "client-esm", "common"]) {
       const src = path.join(fileRoot, p);
       const dest = path.join("foundry", p);
-      await safeSymlink(src, dest);
+      await safeSymlink(src, dest, true);
     }
   } else if (foundryVersion >= 13) {
     // JavaScript files for v13+
+    console.info("Using FoundryVTT V13+ setup");
     for (const p of ["client", "common", "tsconfig.json"]) {
       const src = path.join(fileRoot, p);
       const dest = path.join("foundry", p);
-      await safeSymlink(src, dest);
+      await safeSymlink(src, dest, p !== "tsconfig.json");
     }
   } else {
     console.error(
@@ -81,6 +83,7 @@ async function main() {
   await safeSymlink(
     path.join(fileRoot, "public", "lang"),
     path.join("foundry", "lang"),
+    true,
   );
 
   // Module symlink in Foundry's modules directory
@@ -96,14 +99,29 @@ async function main() {
     );
 
     await fs.promises.mkdir(path.dirname(dest), { recursive: true });
-    await safeSymlink(src, dest);
+    await safeSymlink(src, dest, true);
   } catch (err) {
     console.error(`Failed to link module: ${err}`);
   }
 }
 
-async function safeSymlink(target, linkPath) {
+async function safeSymlink(target, linkPath, expectDir = false) {
   try {
+    if (expectDir) {
+      try {
+        const stats = await fs.promises.stat(target);
+        if (!stats.isDirectory()) {
+          console.error(
+            `Expected directory for symlink target but found non-directory: ${target}`,
+          );
+          process.exit(1);
+        }
+      } catch (e) {
+        console.error(`Symlink target directory does not exist: ${target}`);
+        process.exit(1);
+      }
+    }
+
     await fs.promises
       .lstat(linkPath)
       .then(async (stats) => {

@@ -43,7 +43,7 @@ const TEMPLATE_FOLDER_PATH = `/modules/${MODULE_ID}/templates`;
 const ATTRIBUTE_TYPES = {
   PATH: "path",
   CODE: "code",
-  //GENERATOR: "generator",
+  MACRO: "macro",
 };
 
 export {

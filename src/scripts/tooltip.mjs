@@ -13,26 +13,28 @@ export class TokenTooltip {
 
   constructor() {
     if (TokenTooltip.instance) {
-      throw new Error("You can only create one of TokenTooltipSingleton!");
+      throw new Error(`You can only create one of ${TokenTooltip.name}!`);
     }
+
     TokenTooltip.instance = this;
+    this.token = null;
   }
 
   /**
-   * @type {Token}
+   * @type {foundry.canvas.placeables.Token | null}
    */
   token;
 
   /**
-   * Returns whether the tooltip is currently active.
+   * Returns whether the tooltip is currently shown.
    */
   get isShown() {
     return token != null;
   }
 
   /**
-   * Shows the tooltip, displaying data of the given token.
-   * @param {Token} token
+   * Shows the tooltip.
+   * @param {foundry.canvas.placeables.Token} token
    */
   async show(token) {
     // Do not do anything if disabled
@@ -47,7 +49,7 @@ export class TokenTooltip {
 
     this.token = token;
 
-    if (!this.#isTokenValid()) return;
+    if (!this.#shouldShowTooltip()) return;
 
     // If the token hud is open, we do not render a tooltip for that token
     if (game.canvas?.tokens?.hud?.rendered) {
@@ -110,7 +112,7 @@ export class TokenTooltip {
   }
 
   /**
-   * Hides the tooltip
+   * Hides the tooltip.
    */
   hide() {
     this.token = null;
@@ -122,38 +124,38 @@ export class TokenTooltip {
   }
 
   /**
-   * Updates the active tooltip, refreshing data displayed.
-   * Only works if shown!
+   * Updates and refreshes the shown tooltip.
    */
   async update() {
-    if (!this.#isTokenValid()) return;
+    if (!this.#shouldShowTooltip()) return;
 
     this.show(this.token);
   }
 
   /**
-   * Checks if the given token is valid.
-   * @param {Token} token
-   * @returns {boolean} True if the token is valid and a tooltip can be displayed for it, false otherwise.
+   * Returns whether a tooltip should be shown for the given token.
+   * Falls back to the currently active token when no token is provided.
+   * @param {foundry.canvas.placeables.Token | null | undefined} [token]
+   * @returns {boolean} `true` when tooltip display conditions are met, otherwise `false`.
    */
-  #isTokenValid(token) {
+  #shouldShowTooltip(token) {
     token ??= this.token;
     if ((token == null) || (token.document == null) || (token.actor == null))
       return false;
 
-    // If the token has no world transform, we cant grab its position on the screen
+    // Sometimes a token has no world transform, which makes it invalid since we don't know its screen position.
     if (!token.worldTransform) return false;
 
-    // If the token is hidden or secret, we should not show a tooltip for it
+    // Ignore hidden, secret or not visible tokens
     if (token.document.hidden) return false;
     if (token.document.isSecret) return false;
     if (!token.visible) return false;
 
-    // If the token is insible, we should not show a tooltip for it
+    // Ignore invisible or nondetectable tokens
     if ([CONFIG.specialStatusEffects.INVISIBLE, CONFIG.specialStatusEffects.NONDETECTION].some((x) => token.document.hasStatusEffect(x))) return false;
 
-    // Ignore groups
-    if (token.actor.type === "group") return false;
+    // Ignore group and vehicle actors
+    if (["group", "vehicle"].includes(token.actor.type)) return false;
 
     // Ignore item piles if required
     if (
@@ -163,7 +165,7 @@ export class TokenTooltip {
     )
       return false;
 
-    // Ignore dead if required
+    // Ignore dead actors
     if (
       getModuleSetting("disableTooltipsDead") &&
       token.document.actor.statuses.has(CONFIG.specialStatusEffects.DEFEATED)
@@ -176,42 +178,3 @@ export class TokenTooltip {
     return true;
   }
 }
-
-/* const worldTransform = token.worldTransform;
-const posY = Math.round(worldTransform.ty - 5);
-// prettier-ignore
-const posX = Math.round(worldTransform.tx + (token.w * worldTransform.a) + 20);
-const id = `${MODULE_ID}-token-tooltip`;
-
-const htmlString = await foundry.applications.handlebars.renderTemplate(
-  `${TEMPLATE_FOLDER_PATH}/token-tooltip.hbs`,
-  {
-    id,
-    moduleId: MODULE_ID,
-    activeClass: active ? "active" : "",
-    posX,
-    posY,
-    header: token.name,
-    pills: [],
-    rows: [
-      "lorem",
-      "lorem",
-      "lorem",
-      "lorem",
-      "lorem",
-      "lorem",
-      "lorem",
-      "lorem",
-    ],
-  }
-);
-
-const tokenTooltipElement = document.getElementById(id);
-if (tokenTooltipElement) {
-  const tempDiv = document.createElement("div");
-  tempDiv.innerHTML = htmlString;
-  const newElement = tempDiv.firstElementChild;
-  tokenTooltipElement.replaceWith(newElement);
-} else {
-  document.body.insertAdjacentHTML("beforeend", htmlString);
-} */

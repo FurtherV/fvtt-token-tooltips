@@ -15,6 +15,6 @@
     "@html-eslint/parser": "^0.26.0",
     "@types/jquery": "^3.5.32",
     "eslint": "^8.57.0",
-    "rollup-config-badger-den": "github:FurtherV/rollup-config-badger-den#develop"
+    "rollup-config-badger-den": "^1.12.0"
   }
 }
