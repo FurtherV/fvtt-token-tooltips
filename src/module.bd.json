@@ -7,7 +7,7 @@
   "entryPoints": {
     "main": "module.mjs",
     "lang": "static/lang/**",
-    "templates": "templates/*"
+    "templates": "templates/**/*.hbs"
   },
   "package": {
     "create": false,
